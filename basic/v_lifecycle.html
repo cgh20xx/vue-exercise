@@ -189,10 +189,10 @@ const Child = {
     console.log(`updated! ${this.text}`);
   },
   activated () {
-    alert(`activated! ${this.text}`);
+    alert(`activated! ${this.text}`); // 這個hook只會存在有加上<keep-alive>
   },
   deactivated () {
-    alert(`deactivated! ${this.text}`);
+    alert(`deactivated! ${this.text}`); // 這個hook只會存在有加上<keep-alive>
   },
   beforeDestroy() {
     console.log(`beforeDestroy! ${this.text}`);
