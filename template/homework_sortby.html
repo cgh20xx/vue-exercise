@@ -119,16 +119,19 @@
     <thead>
       <tr>
         <th>品名</th>
-        <th class="click">價格 
-          <!-- isReverse 為反轉 className -->
-          <span class="icon isReverse">
+        <th class="click" @click.prevent="sortType = 'price'; orderByDesc = !orderByDesc">價格 
+          <!-- inverse 為反轉 className -->
+          <span class="icon" :class="{inverse: orderByDesc}" v-if="sortType === 'price'"> <!-- inverse --> 
             <i class=" fas fa-angle-up text-success"></i>
           </span>
         </th>
-        <th class="click">到期日 
+        <th class="click" @click.prevent="sortType = 'expiryDate'; orderByDesc = !orderByDesc">到期日 
+          <span class="icon" :class="{inverse: orderByDesc}" v-if="sortType === 'expiryDate'"> <!-- inverse --> 
+            <i class=" fas fa-angle-up text-success"></i>
+          </span>
         </th>
       </tr>
-      <tr v-for="item in data">
+      <tr v-for="item in sortData">
         <td>{{ item.name }}</td>
         <td>{{ item.price }}</td>
         <td>{{ item.expiryDate }}</td>
@@ -180,13 +183,40 @@ var app = new Vue({
         expiryDate: 200
       }
     ],
+    sortType: '',
+    orderByDesc: true, // 排序小到大
   },
   // 請在此撰寫 JavaScript
-  computed: {}
+  computed: {
+    sortData() {
+      if (this.sortType === '') {
+        return this.data;
+      }
+      const sortFn = (a, b) => {
+        const prev = a[this.sortType];
+        const next = b[this.sortType];
+        if (this.orderByDesc) {
+          return next - prev;
+        } else {
+          return prev - next;
+        }
+      }
+      return this.data.sort(sortFn);
+    },
+  },
+  watch: {
+    sortType() {
+      this.orderByDesc = true;
+    }
+  }
 });
 </script>
 
 <style>
+.table th {
+  user-select: none;
+  -moz-user-select: none;
+}
 .table th.click {
   cursor: pointer;
 }

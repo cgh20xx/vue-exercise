@@ -162,11 +162,11 @@
   <p>講師說明 Vue 切換狀態可能遇到的問題</p>
   <template v-if="loginType === 'username'">
     <label>Username</label>
-    <input class="form-control" placeholder="Enter your username">
+    <input class="form-control" placeholder="Enter your username" key="0">
   </template>
   <template v-else>
     <label>Email</label>
-    <input class="form-control" placeholder="Enter your email address">
+    <input class="form-control" placeholder="Enter your email address" key="1">
   </template>
   <button class="btn btn-outline-primary mt-3" @click="toggleLoginType">切換狀態</button>
   <hr>
